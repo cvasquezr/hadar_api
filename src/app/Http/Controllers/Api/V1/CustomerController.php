@@ -14,7 +14,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return CustomerCollection
      */
     public function index(): CustomerCollection
     {
@@ -50,7 +50,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return new CustomerResource($customer);
+        return (new CustomerResource($customer))->response()->setStatusCode(201);
     }
 
     /**
