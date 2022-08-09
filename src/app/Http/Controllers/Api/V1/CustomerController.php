@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\V1\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Resources\V1\CustomerCollection;
 use App\Http\Resources\V1\CustomerResource;
@@ -13,6 +13,35 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    /**
+     * Field used to wrap error messages. Similar to how we use "data" to wrap successful messages
+     * that return data, but for errors.
+     *
+     * @var string
+     */
+    const FIELD_ERRORS = 'errors';
+
+    /**
+     * Field used to wrap message error.
+     *
+     * @var string
+     */
+    const FIELD_MESSAGE = 'message';
+
+    /**
+     * Field used to wrap body in message error.
+     *
+     * @var string
+     */
+    const FIELD_BODY = 'body';
+
+    /**
+     * Field used to wrap code in message error.
+     *
+     * @var string
+     */
+    const FIELD_CODE = 'body';
+
     /**
      * Display a listing of the resource.
      *
@@ -35,16 +64,6 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreCustomerRequest  $request
@@ -52,7 +71,18 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
+        try {
+            return new CustomerResource(Customer::create($request->all()));
+
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                self::FIELD_MESSAGE => 'There was an error while creating a client',
+                self::FIELD_CODE    => $e->getCode(),
+                self::FIELD_ERRORS  => [self::FIELD_BODY => $request->all()]
+            ], 500);
+
+        }
     }
 
     /**
@@ -70,17 +100,6 @@ class CustomerController extends Controller
         }
 
         return (new CustomerResource($customer));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Customer $customer)
-    {
-        //
     }
 
     /**
