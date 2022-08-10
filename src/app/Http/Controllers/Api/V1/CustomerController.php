@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\V1\UpdateCustomerRequest;
 use App\Http\Resources\V1\CustomerCollection;
 use App\Http\Resources\V1\CustomerResource;
 use App\Models\Customer;
@@ -40,7 +40,7 @@ class CustomerController extends Controller
      *
      * @var string
      */
-    const FIELD_CODE = 'body';
+    const FIELD_CODE = 'code';
 
     /**
      * Display a listing of the resource.
@@ -111,7 +111,20 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        try {
+            $customer->update($request->all());
+
+            return response()->json([], 204);
+
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                self::FIELD_MESSAGE => 'There was an error while creating a client',
+                self::FIELD_CODE    => $e->getCode(),
+                self::FIELD_ERRORS  => [self::FIELD_BODY => $request->all()]
+            ], 500);
+
+        }
     }
 
     /**
