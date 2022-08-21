@@ -2,9 +2,8 @@
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cvasquezr_hadar_api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=cvasquezr_hadar_api)
 </p>
 
 ## About Hadar Api
