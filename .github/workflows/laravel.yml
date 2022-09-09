@@ -43,7 +43,7 @@ jobs:
         --coverage-html   tests/_output/coverage-html
     - name: Fix code coverage paths
       run: sed -i
-        's@'$GITHUB_WORKSPACE'@/github/workspace/@g' tests/_output/clover.xml
+        's@'$GITHUB_WORKSPACE'@/github/workspace/@g' tests/_output/clover.xml \
         's@'$GITHUB_WORKSPACE'@/github/workspace/@g' tests/_output/junit.xml
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
