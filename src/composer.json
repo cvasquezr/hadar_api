@@ -4,6 +4,14 @@
     "description": "Main app API.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Carlos Vasquez",
+            "email": "cvasquezr@outlook.com",
+            "homepage": "https://www.cvasquez.io",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^8.0 || ^8.1",
         "fruitcake/laravel-cors": "^3.0",
