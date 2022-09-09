@@ -36,4 +36,17 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
+      run: vendor/bin/phpunit \
+        --log-junit       tests/_output/junit.xml \
+        --coverage-clover tests/_output/clover.xml \
+        --coverage-xml    tests/_output/coverage-xml \
+        --coverage-html   tests/_output/coverage-html
+    - name: Fix code coverage paths
+      run: sed -i
+        's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.xml
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
